@@ -1,10 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Vostok.Commons.Collections;
 
 namespace Vostok.Graphite.Client
 {
-    public class GraphiteClient
+    public class GraphiteClient : IDisposable
     {
         private readonly IPool<GraphiteConnection> connectionPool;
 
