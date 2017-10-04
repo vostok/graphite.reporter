@@ -16,11 +16,18 @@ namespace Vostok.Graphite.Client
 
         public async Task SendAsync(IEnumerable<Metric> metrics)
         {
-            using (var poolHandle = connectionPool.AcquireHandle())
+            var poolHandle = connectionPool.AcquireHandle();
+            var connection = poolHandle.Resource;
+            try
             {
-                var connection = (GraphiteConnection)poolHandle;
                 await connection.SendAsync(metrics).ConfigureAwait(false);
             }
+            catch (Exception)
+            {
+                connection.Dispose();
+                throw;
+            }
+            poolHandle.Dispose();
         }
 
         public void Dispose()
