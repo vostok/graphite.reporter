@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Globalization;
-using System.Text;
 
 namespace Vostok.Graphite.Client
 {
@@ -34,16 +32,7 @@ namespace Vostok.Graphite.Client
 
         public override string ToString()
         {
-            var builder = new StringBuilder(Name.Length + 32);
-
-            builder
-                .Append(Name)
-                .Append(' ')
-                .Append(Value.ToString(CultureInfo.InvariantCulture))
-                .Append(' ')
-                .Append(Timestamp);
-
-            return builder.ToString();
+            return new MetricSerializer().Serialize(this);
         }
 
         private static void ValidateMetricName(string name)
