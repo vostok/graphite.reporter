@@ -8,8 +8,7 @@ namespace Vostok.Graphite.Client
     {
         public Metric(string name, double value, long timestamp)
         {
-            if (string.IsNullOrWhiteSpace(name))
-                throw new ArgumentNullException(nameof(name));
+            ValidateMetricName(name);
 
             Name = name;
             Value = value;
@@ -17,17 +16,19 @@ namespace Vostok.Graphite.Client
         }
 
         /// <summary>
-        /// Имя метрики (набор сегментов, разделенных точкой).
+        /// <para>Metric name contains of several segments</para>
+        /// <para>Segments are separated by dot '.'</para>
+        /// <para>Inside a segment only a-zA-Z0-9_ chars are valid</para>
         /// </summary>
         public string Name { get; }
 
         /// <summary>
-        /// Значение метрики.
+        /// Metric value
         /// </summary>
         public double Value { get; }
 
         /// <summary>
-        /// Timestamp, соответствующий значению метрики.
+        /// Timestamp in Unix format
         /// </summary>
         public long Timestamp { get; }
 
@@ -45,5 +46,42 @@ namespace Vostok.Graphite.Client
             return builder.ToString();
         }
 
+        private static void ValidateMetricName(string name)
+        {
+            if (string.IsNullOrEmpty(name))
+            {
+                throw new ArgumentException("Metric name can't be null or have zero length");
+            }
+
+            if (name[0] == '.' || name[name.Length - 1] == '.')
+            {
+                throw new ArgumentException($"Metric name can't start or end with dot: {name}");
+            }
+
+            var isSegmentStart = true;
+            for (var i = 0; i < name.Length; i++)
+            {
+                if (name[i] == '.')
+                {
+                    if (isSegmentStart)
+                    {
+                        throw new ArgumentException($"Metric can't have segment with zero length. Position ${i}: {name}");
+                    }
+                    isSegmentStart = true;
+                    continue;
+                }
+
+                var isValidSegmentChar =
+                    (name[i] >= 'a' && name[i] <= 'z')
+                    || (name[i] >= 'A' && name[i] <= 'Z')
+                    || (name[i] >= '0' && name[i] <= '9')
+                    || name[i] == '_';
+                if (!isValidSegmentChar)
+                {
+                    throw new ArgumentException($"Invalid char '{name[i]}' in metric name. Position {i}: {name}");
+                }
+                isSegmentStart = false;
+            }
+        }
     }
 }

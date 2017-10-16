@@ -24,6 +24,7 @@ namespace Vostok.Graphite.Client
             }
             catch (Exception)
             {
+                //@ezsilmar Should not return connection to pool in this case
                 connection.Dispose();
                 throw;
             }
