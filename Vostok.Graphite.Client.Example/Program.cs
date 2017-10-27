@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Vostok.Logging.Logs;
 
 namespace Vostok.Graphite.Client.Example
 {
@@ -11,7 +12,7 @@ namespace Vostok.Graphite.Client.Example
             GraphiteClient graphiteClient = null;
             try
             {
-                graphiteClient = new GraphiteClient("graphite-relay.skbkontur.ru", 2003);
+                graphiteClient = new GraphiteClient("graphite-relay.skbkontur.ru", 2003, new ConsoleLog());
 
                 Parallel.For(0, 10, (i, s) =>
                 {
