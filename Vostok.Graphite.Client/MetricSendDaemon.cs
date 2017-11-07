@@ -10,8 +10,7 @@ namespace Vostok.Graphite.Client
 {
     internal class MetricSendDaemon : IMetricSendDaemon
     {
-        private readonly IMetricBuffer metricBuffer;
-        private readonly IGraphiteClient graphiteClient;
+        private readonly IMetricSender sender;
         private readonly GraphiteSinkConfig config;
         private readonly ILog log;
 
@@ -25,17 +24,15 @@ namespace Vostok.Graphite.Client
         private Task senderRoutine;
 
         public MetricSendDaemon(
-            IMetricBuffer metricBuffer,
-            IGraphiteClient graphiteClient,
+            IMetricSender sender,
             GraphiteSinkConfig config,
             ILog log)
         {
-            this.metricBuffer = metricBuffer;
-            this.graphiteClient = graphiteClient;
+            this.sender = sender;
             this.config = config;
             this.log = log;
 
-            this.state = new AtomicInt(NotStarted);
+            state = new AtomicInt(NotStarted);
             initializationSync = new object();
         }
 
@@ -57,13 +54,16 @@ namespace Vostok.Graphite.Client
         private async Task SenderRoutine()
         {
             var sendPeriod = config.SendPeriod;
+            var sw = new Stopwatch();
 
             while (state == Working)
             {
                 await WaitForNextSend(sendPeriod);
 
-                var (success, elapsed) = await SendAsync();
-                
+                sw.Restart();
+                var success = await sender.SendAsync();
+                var elapsed = sw.Elapsed;
+
                 if (success)
                 {
                     sendPeriod = config.SendPeriod;
@@ -74,40 +74,6 @@ namespace Vostok.Graphite.Client
                     LogIncreasedSendPeriod(sendPeriod);
                 }
                 sendPeriod = TimeSpan.FromTicks(Math.Max(0, (sendPeriod - elapsed).Ticks));
-            }
-        }
-
-        private async Task<(bool, TimeSpan)> SendAsync()
-        {
-            var snapshot = metricBuffer.Reset();
-            if (snapshot == null)
-            {
-                return (true, TimeSpan.Zero);
-            }
-
-            var sw = Stopwatch.StartNew();
-
-            var success = await graphiteClient.SendAsync(snapshot).ConfigureAwait(false);
-            if (!success)
-            {
-                metricBuffer.Add(snapshot);
-            }
-
-            var elapsed = sw.Elapsed;
-            LogSendAttempt(success, elapsed, snapshot.Count);
-
-            return (success, elapsed);
-        }
-
-        private void LogSendAttempt(bool success, TimeSpan elapsed, int count)
-        {
-            if (success)
-            {
-                log.Debug($"Succesfully sent {count} metrics to Graphite. Elapsed: {elapsed:c}");
-            }
-            else
-            {
-                log.Warn($"Failed to send metrics. Snapshot length: {count}. Elapsed: {elapsed:c}");
             }
         }
 
@@ -144,7 +110,7 @@ namespace Vostok.Graphite.Client
                 {
                     senderRoutineCts?.Cancel();
                     senderRoutine?.GetAwaiter().GetResult();
-                    SendAsync().GetAwaiter().GetResult();
+                    sender.SendAsync().GetAwaiter().GetResult();
                 }
             }
         }

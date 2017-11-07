@@ -9,19 +9,22 @@ namespace Vostok.Graphite.Client
     {
         private readonly IMetricBuffer metricBuffer;
         private readonly IMetricSendDaemon metricSendDaemon;
+        private readonly GraphiteClient graphiteClient;
 
         public GraphiteSink(GraphiteSinkConfig config, ILog log = null)
         {
             log = (log ?? new SilentLog()).ForContext(this);
 
             metricBuffer = new MetricBuffer(config.MaxMetricBufferCapacity);
-            var graphiteClient = new GraphiteClient(config.GraphiteHost, config.GraphitePort, log);
-            metricSendDaemon = new MetricSendDaemon(metricBuffer, graphiteClient, config, log);
+            graphiteClient = new GraphiteClient(config.GraphiteHost, config.GraphitePort, log);
+            var metricSender = new GraphiteMetricSender(graphiteClient, metricBuffer, log);
+            metricSendDaemon = new MetricSendDaemon(metricSender, config, log);
         }
 
         public void Dispose()
         {
             metricSendDaemon.Dispose();
+            graphiteClient.Dispose();
         }
 
         public void Push(IEnumerable<Metric> metrics)
