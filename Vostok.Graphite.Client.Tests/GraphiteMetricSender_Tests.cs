@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Threading;
 using FluentAssertions;
 using NUnit.Framework;
 using Vostok.Logging.Logs;
@@ -6,6 +8,87 @@ using NSubstitute;
 
 namespace Vostok.Graphite.Client.Tests
 {
+    [TestFixture]
+    public class MetricSendDaemon_Tests
+    {
+        private MetricSendDaemon daemon;
+        private IMetricSender metricSender;
+        private GraphiteSinkConfig config;
+
+        [SetUp]
+        public void SetUp()
+        {
+            config = new GraphiteSinkConfig();
+            metricSender = Substitute.For<IMetricSender>();
+            daemon = new MetricSendDaemon(metricSender, config, new ConsoleLog());
+        }
+
+        [TearDown]
+        public void TearDown()
+        {
+            daemon?.Dispose();
+        }
+
+        [Test]
+        public void Should_periodically_send_metrics()
+        {
+            config.SendPeriod = 50.Milliseconds();
+            metricSender.SendAsync().Returns(true);
+            var called = 0;
+            metricSender.When(s => s.SendAsync()).Do(ci => called++);
+
+            daemon.Start();
+            ShouldNotPassIn(() => { called.Should().Be(2); }, 70.Milliseconds());
+            ShouldPassIn(() => { called.Should().Be(2); }, 100.Milliseconds());
+        }
+
+//        [Test]
+//        public void Should_increase_sending_period_if_send_failed()
+//        {
+//            config.SendPeriod = 50.Milliseconds();
+//            metricSender.SendAsync().Returns(false);
+//        }
+
+        private void ShouldPassIn(Action action, TimeSpan time)
+        {
+            var finish = DateTime.UtcNow + time;
+            while (DateTime.UtcNow < finish)
+            {
+                try
+                {
+                    action();
+                }
+                catch (Exception)
+                {
+                    Thread.Sleep(5);
+                    continue;
+                }
+
+                return;
+            }
+
+            Assert.Fail("Action didn't complete in specified timeout");
+        }
+
+        private void ShouldNotPassIn(Action action, TimeSpan time)
+        {
+            var finish = DateTime.UtcNow + time;
+            while (DateTime.UtcNow < finish)
+            {
+                try
+                {
+                    action();
+                }
+                catch (Exception)
+                {
+                    Thread.Sleep(5);
+                    continue;
+                }
+                Assert.Fail("Action completed in specified timeout");
+            }
+        }
+    }
+
     [TestFixture]
     public class GraphiteMetricSender_Tests
     {
