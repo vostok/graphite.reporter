@@ -18,7 +18,8 @@ namespace Vostok.Graphite.Client
             metricBuffer = new MetricBuffer(config.MaxMetricBufferCapacity);
             graphiteClient = new GraphiteClient(config.GraphiteHost, config.GraphitePort, log);
             var metricSender = new GraphiteMetricSender(graphiteClient, metricBuffer, log);
-            metricSendDaemon = new MetricSendDaemon(metricSender, config, log);
+            var sendPeriodProvider = new SendPeriodProvider(config, log);
+            metricSendDaemon = new MetricSendDaemon(metricSender, sendPeriodProvider);
         }
 
         public void Dispose()

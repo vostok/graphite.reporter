@@ -11,8 +11,7 @@ namespace Vostok.Graphite.Client
     internal class MetricSendDaemon : IMetricSendDaemon
     {
         private readonly IMetricSender sender;
-        private readonly GraphiteSinkConfig config;
-        private readonly ILog log;
+        private readonly ISendPeriodProvider sendPeriodProvider;
 
         private const int NotStarted = 0;
         private const int Working = 1;
@@ -25,12 +24,10 @@ namespace Vostok.Graphite.Client
 
         public MetricSendDaemon(
             IMetricSender sender,
-            GraphiteSinkConfig config,
-            ILog log)
+            ISendPeriodProvider sendPeriodProvider)
         {
             this.sender = sender;
-            this.config = config;
-            this.log = log;
+            this.sendPeriodProvider = sendPeriodProvider;
 
             state = new AtomicInt(NotStarted);
             initializationSync = new object();
@@ -53,7 +50,7 @@ namespace Vostok.Graphite.Client
 
         private async Task SenderRoutine()
         {
-            var sendPeriod = config.SendPeriod;
+            var sendPeriod = sendPeriodProvider.GetNext(true);
             var sw = new Stopwatch();
 
             while (state == Working)
@@ -64,32 +61,9 @@ namespace Vostok.Graphite.Client
                 var success = await sender.SendAsync();
                 var elapsed = sw.Elapsed;
 
-                if (success)
-                {
-                    sendPeriod = config.SendPeriod;
-                }
-                else
-                {
-                    sendPeriod = IncreaseSendPeriod(sendPeriod);
-                    LogIncreasedSendPeriod(sendPeriod);
-                }
-                sendPeriod = TimeSpan.FromTicks(Math.Max(0, (sendPeriod - elapsed).Ticks));
+                sendPeriod = sendPeriodProvider.GetNext(success);
+                sendPeriod = TimeSpanExtensions.Max(TimeSpan.Zero, sendPeriod - elapsed);
             }
-        }
-
-        private void LogIncreasedSendPeriod(TimeSpan sendPeriod)
-        {
-            log.Debug($"Increased send period to {sendPeriod:c}");
-        }
-
-        private TimeSpan IncreaseSendPeriod(TimeSpan sendPeriod)
-        {
-            var multiplier = 1.5 + 0.5*ThreadSafeRandom.NextDouble();
-            var newPeriodTicks = (long) (sendPeriod.Ticks*multiplier);
-
-            newPeriodTicks = Math.Min(newPeriodTicks, config.SendPeriodCap.Ticks);
-            newPeriodTicks = Math.Max(newPeriodTicks, config.SendPeriod.Ticks);
-            return TimeSpan.FromTicks(newPeriodTicks);
         }
 
         private async Task WaitForNextSend(TimeSpan sendPeriod)
