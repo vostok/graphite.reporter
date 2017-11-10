@@ -4,17 +4,62 @@ nuget:
   project_feed: true
   disable_publish_on_pr: true
 install:
-  - ps: |
+ - ps: |
+      $branch = "$env:appveyor_repo_branch"
+      $prbranch = "$env:APPVEYOR_PULL_REQUEST_HEAD_REPO_BRANCH"
+      echo "Branch: $branch; Pull request branch: $prbranch"
+      $branchstr = ""
+      if ($prbranch -ne "")
+      {
+        $branchstr = "-pr-$prbranch"
+      }
+      else
+      {
+        if ($branch -ne "master")
+        {
+          $branchstr = "-$branch"
+        }
+      }
       $zeroPaddedBuildNumber = [convert]::ToInt32($env:appveyor_build_number, 10).ToString("000000")
-      Update-AppveyorBuild -Version "1.0.0-pre$zeroPaddedBuildNumber"
-      $xmlPath = "$env:appveyor_build_folder\Vostok.Graphite.Client\Vostok.Graphite.Client.csproj"
-      $xml = [xml](get-content $xmlPath)
-      $version = $xml.CreateElement("Version")
-      $versionText = $xml.CreateTextNode($env:appveyor_build_version)
-      $version.AppendChild($versionText)
-      $xml.Project.PropertyGroup.AppendChild($version)
-      $xml.Save($xmlPath)
+      Update-AppveyorBuild -Version "1.0.0-pre$zeroPaddedBuildNumber$branchstr".Replace("_", "-")
+      $csprojs = $env:appveyor_build_folder | Get-ChildItem -Recurse -Filter "*.csproj"
+      foreach($csproj in $csprojs)
+      {
+        $name = $csproj.BaseName
+        $xmlPath = "$env:appveyor_build_folder\$name\$name.csproj"
+        $xml = [xml](Get-Content $xmlPath)
+        $gen = $xml.SelectSingleNode("//GeneratePackageOnBuild")
+        if ($gen -and $gen.InnerText -eq "True")
+        {
+          echo "Generating version $env:appveyor_build_version for $name"
+          $version = $xml.CreateElement("Version")
+          $versionText = $xml.CreateTextNode($env:appveyor_build_version)
+          $version.AppendChild($versionText)
+          $xml.Project.PropertyGroup.AppendChild($version)
+          $xml.Save($xmlPath)
+        }
+      }
   - dotnet restore
 configuration: Release
 after_build:
-  - ps: if ($env:appveyor_repo_branch -eq "master") { Get-ChildItem $env:appveyor_build_folder\Vostok.Graphite.Client\bin\Release\Vostok.GraphiteClient.*.nupkg | % { Push-AppveyorArtifact $_.FullName -FileName $_.Name } }
+  - ps: |
+      $prbranch = "$env:APPVEYOR_PULL_REQUEST_HEAD_REPO_BRANCH"
+      if ($prbranch -eq "")
+      {
+        $csprojs = $env:appveyor_build_folder | Get-ChildItem -Recurse -Filter "*.csproj"
+        foreach($csproj in $csprojs)
+        {
+          $name = $csproj.BaseName
+          $nupkgs = Get-ChildItem $env:appveyor_build_folder\$name\bin\Release\$name.*.nupkg
+          if ($nupkgs)
+          {
+            $nupkgs | % { Push-AppveyorArtifact $_.FullName -FileName $_.Name }
+          }          
+        }
+      }
+test_script:
+  - ps: dotnet test "$env:appveyor_build_folder\Vostok.Graphite.Client.Tests\Vostok.Graphite.Client.Tests.csproj" --logger "trx;LogFileName=core-tests.trx"
+after_test:
+  - ps: |
+      $wc = New-Object 'System.Net.WebClient'
+      $wc.UploadFile("https://ci.appveyor.com/api/testresults/mstest/$($env:appveyor_job_id)", "$env:appveyor_build_folder\Vostok.Graphite.Client.Tests\TestResults\core-tests.trx")
