@@ -4,7 +4,7 @@ nuget:
   project_feed: true
   disable_publish_on_pr: true
 install:
- - ps: |
+  - ps: |
       $branch = "$env:appveyor_repo_branch"
       $prbranch = "$env:APPVEYOR_PULL_REQUEST_HEAD_REPO_BRANCH"
       echo "Branch: $branch; Pull request branch: $prbranch"
