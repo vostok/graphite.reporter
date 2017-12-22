@@ -5,6 +5,6 @@ namespace Vostok.Graphite.Client
 {
     public interface IGraphiteClient
     {
-        Task<bool> SendAsync(IEnumerable<Metric> metrics);
+        Task<bool> SendAsync(IReadOnlyCollection<Metric> metrics);
     }
 }

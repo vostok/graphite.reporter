@@ -13,9 +13,9 @@ namespace Vostok.Graphite.Client
         private readonly IMetricSender sender;
         private readonly ISendPeriodProvider sendPeriodProvider;
 
-        private const int NotStarted = 0;
-        private const int Working = 1;
-        private const int Disposed = 2;
+        private const int notStarted = 0;
+        private const int working = 1;
+        private const int disposed = 2;
         private readonly AtomicInt state;
         private readonly object initializationSync;
 
@@ -29,17 +29,17 @@ namespace Vostok.Graphite.Client
             this.sender = sender;
             this.sendPeriodProvider = sendPeriodProvider;
 
-            state = new AtomicInt(NotStarted);
+            state = new AtomicInt(notStarted);
             initializationSync = new object();
         }
 
         public void Start()
         {
-            if (state.TryIncreaseTo(Working))
+            if (state.TryIncreaseTo(working))
             {
                 lock (initializationSync)
                 {
-                    if (state == Working)
+                    if (state == working)
                     {
                         senderRoutineCts = new CancellationTokenSource();
                         senderRoutine = Task.Run(SenderRoutine);
@@ -53,7 +53,7 @@ namespace Vostok.Graphite.Client
             var sendPeriod = sendPeriodProvider.GetNext(true);
             var sw = new Stopwatch();
 
-            while (state == Working)
+            while (state == working)
             {
                 await WaitForNextSend(sendPeriod);
 
@@ -78,7 +78,7 @@ namespace Vostok.Graphite.Client
 
         public void Dispose()
         {
-            if (state.TryIncreaseTo(Disposed))
+            if (state.TryIncreaseTo(disposed))
             {
                 lock (initializationSync)
                 {

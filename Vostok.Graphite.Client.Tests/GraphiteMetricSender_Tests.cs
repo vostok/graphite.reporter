@@ -29,7 +29,7 @@ namespace Vostok.Graphite.Client.Tests
             var result = sender.SendAsync().GetAwaiter().GetResult();
 
             result.Should().BeTrue();
-            client.DidNotReceive().SendAsync(Arg.Any<IEnumerable<Metric>>());
+            client.DidNotReceive().SendAsync(Arg.Any<IReadOnlyCollection<Metric>>());
         }
 
         [Test]

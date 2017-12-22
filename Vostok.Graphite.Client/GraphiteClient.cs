@@ -17,7 +17,7 @@ namespace Vostok.Graphite.Client
             connectionPool = new UnlimitedLazyPool<GraphiteConnection>(() => new GraphiteConnection(host, port));
         }
 
-        public async Task<bool> SendAsync(IEnumerable<Metric> metrics)
+        public async Task<bool> SendAsync(IReadOnlyCollection<Metric> metrics)
         {
             PoolHandle<GraphiteConnection> handle;
             while ((handle = TryGetHandle()) != null)

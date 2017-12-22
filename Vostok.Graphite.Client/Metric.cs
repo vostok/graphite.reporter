@@ -16,7 +16,7 @@ namespace Vostok.Graphite.Client
         /// <summary>
         /// <para>Metric name contains of several segments</para>
         /// <para>Segments are separated by dot '.'</para>
-        /// <para>Inside a segment only a-zA-Z0-9_ chars are valid</para>
+        /// <para>Only a-zA-Z0-9_ chars are valid inside a segment</para>
         /// </summary>
         public string Name { get; }
 
@@ -39,7 +39,7 @@ namespace Vostok.Graphite.Client
         {
             if (string.IsNullOrEmpty(name))
             {
-                throw new ArgumentException("Metric name can't be null or have zero length");
+                throw new ArgumentException("Metric name can't be null or empty");
             }
 
             if (name[0] == '.' || name[name.Length - 1] == '.')
@@ -54,7 +54,7 @@ namespace Vostok.Graphite.Client
                 {
                     if (isSegmentStart)
                     {
-                        throw new ArgumentException($"Metric can't have segment with zero length. Position ${i}: {name}");
+                        throw new ArgumentException($"Metric can't have a segment with zero length. Position ${i}: {name}");
                     }
                     isSegmentStart = true;
                     continue;

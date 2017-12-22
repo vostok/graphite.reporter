@@ -47,7 +47,8 @@ namespace Vostok.Graphite.Client.Example
                 var timestamp = startTimestamp - periodPerSeconds*metricsCount*j;
 
                 var metrics = Enumerable.Range(0, metricsCount)
-                    .Select(i => new Metric("Vostok.GraphiteClient_Example.Thread" + threadNumber, random.Next(10), (long) (timestamp + i*5)));
+                    .Select(i => new Metric("Vostok.GraphiteClient_Example.Thread" + threadNumber, random.Next(10), (long) (timestamp + i*5)))
+                    .ToList();
                 graphiteClient.SendAsync(metrics).Wait();
             }
         }
