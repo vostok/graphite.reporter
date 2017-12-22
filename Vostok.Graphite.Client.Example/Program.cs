@@ -5,9 +5,9 @@ using Vostok.Logging.Logs;
 
 namespace Vostok.Graphite.Client.Example
 {
-    class Program
+    public static class Program
     {
-        static void Main()
+        public static void Main()
         {
             GraphiteClient graphiteClient = null;
             try
@@ -18,6 +18,7 @@ namespace Vostok.Graphite.Client.Example
                 {
                     try
                     {
+                        // ReSharper disable once AccessToDisposedClosure
                         Send(graphiteClient, i);
                     }
                     catch (Exception e)

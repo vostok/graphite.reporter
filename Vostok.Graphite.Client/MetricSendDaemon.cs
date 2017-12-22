@@ -4,7 +4,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Vostok.Commons.Synchronization;
 using Vostok.Commons.Utilities;
-using Vostok.Logging;
 
 namespace Vostok.Graphite.Client
 {

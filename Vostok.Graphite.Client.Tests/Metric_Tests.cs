@@ -13,6 +13,7 @@ namespace Vostok.Graphite.Client.Tests
         [TestCase("a_b")]
         public void Can_create_metric_with_valid_name(string name)
         {
+            // ReSharper disable once UnusedVariable
             var metric = new Metric(name, 123, 123);
         }
 

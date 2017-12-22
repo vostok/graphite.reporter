@@ -55,7 +55,7 @@ namespace Vostok.Graphite.Client.Tests
             buffer.Add(metrics);
             var result = buffer.Reset();
 
-            result.Should().BeEquivalentTo(metrics);
+            result.Should().BeEquivalentTo<Metric>(metrics);
         }
 
         private Metric GetMetric(int id)
