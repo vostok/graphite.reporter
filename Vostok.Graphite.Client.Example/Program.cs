@@ -1,22 +1,24 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Vostok.Logging.Logs;
 
 namespace Vostok.Graphite.Client.Example
 {
-    class Program
+    public static class Program
     {
-        static void Main()
+        public static void Main()
         {
             GraphiteClient graphiteClient = null;
             try
             {
-                graphiteClient = new GraphiteClient("graphite-relay.skbkontur.ru", 2003);
+                graphiteClient = new GraphiteClient("graphite-relay.skbkontur.ru", 2003, new ConsoleLog());
 
                 Parallel.For(0, 10, (i, s) =>
                 {
                     try
                     {
+                        // ReSharper disable once AccessToDisposedClosure
                         Send(graphiteClient, i);
                     }
                     catch (Exception e)
@@ -46,7 +48,8 @@ namespace Vostok.Graphite.Client.Example
                 var timestamp = startTimestamp - periodPerSeconds*metricsCount*j;
 
                 var metrics = Enumerable.Range(0, metricsCount)
-                    .Select(i => new Metric("Vostok.GraphiteClient_Example.Thread" + threadNumber, random.Next(10), (long) (timestamp + i*5)));
+                    .Select(i => new Metric("Vostok.GraphiteClient_Example.Thread" + threadNumber, random.Next(10), (long) (timestamp + i*5)))
+                    .ToList();
                 graphiteClient.SendAsync(metrics).Wait();
             }
         }
