@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Vostok.Airlock;
+using Vostok.Graphite.Client;
 using Vostok.Metrics;
 
 namespace Vostok.Graphite.Reporter
@@ -78,7 +79,7 @@ namespace Vostok.Graphite.Reporter
 
         private static string FixInvalidChars(string name)
         {
-            if (name.All(IsPermittedSymbol))
+            if (name.All(Metric.IsValidSegmentChar))
             {
                 return name;
             }
@@ -86,22 +87,13 @@ namespace Vostok.Graphite.Reporter
             var stringBuilder = new StringBuilder(name);
             for (var i = 0; i < stringBuilder.Length; i++)
             {
-                if (!IsPermittedSymbol(stringBuilder[i]))
+                if (!Metric.IsValidSegmentChar(stringBuilder[i]))
                 {
                     stringBuilder[i] = '_';
                 }
             }
 
             return stringBuilder.ToString();
-        }
-
-        private static bool IsPermittedSymbol(char c)
-        {
-            return c >= 'a' && c <= 'z'
-                   || c >= 'A' && c <= 'Z'
-                   || c >= '0' && c <= '9'
-                   || c == '_'
-                   || c == '-';
         }
     }
 }

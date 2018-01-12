@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Vostok.Graphite.Client;
+using Vostok.Logging;
 using Vostok.Metrics;
 
 namespace Vostok.Graphite.Reporter
@@ -7,10 +9,12 @@ namespace Vostok.Graphite.Reporter
     public class MetricConverter
     {
         private readonly IGraphiteNameBuilder graphiteNameBuilder;
+        private readonly ILog log;
 
-        public MetricConverter(IGraphiteNameBuilder graphiteNameBuilder)
+        public MetricConverter(IGraphiteNameBuilder graphiteNameBuilder, ILog log)
         {
             this.graphiteNameBuilder = graphiteNameBuilder;
+            this.log = log;
         }
 
         public IEnumerable<Metric> Convert(string routingKey, MetricEvent metricEvent)
@@ -20,7 +24,18 @@ namespace Vostok.Graphite.Reporter
             {
                 var name = graphiteNameBuilder.BuildName(prefix, pair.Key);
                 var timestamp = metricEvent.Timestamp.ToUnixTimeSeconds();
-                yield return new Metric(name, pair.Value, timestamp);
+                Metric metric = null;
+                try
+                {
+                    metric = new Metric(name, pair.Value, timestamp);
+                }
+                catch (Exception e)
+                {
+                    log.Error(e);
+                }
+
+                if (metric != null)
+                    yield return metric;
             }
         }
     }

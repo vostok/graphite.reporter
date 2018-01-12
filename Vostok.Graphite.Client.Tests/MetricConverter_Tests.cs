@@ -4,6 +4,7 @@ using FluentAssertions;
 using NSubstitute;
 using NUnit.Framework;
 using Vostok.Graphite.Reporter;
+using Vostok.Logging.Logs;
 using Vostok.Metrics;
 
 namespace Vostok.Graphite.Client.Tests
@@ -17,7 +18,7 @@ namespace Vostok.Graphite.Client.Tests
         public void SetUp()
         {
             graphiteNameBuilder = Substitute.For<IGraphiteNameBuilder>();
-            metricConverter = new MetricConverter(graphiteNameBuilder);
+            metricConverter = new MetricConverter(graphiteNameBuilder, new ConsoleLog());
         }
 
         [Test]

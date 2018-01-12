@@ -1,5 +1,6 @@
 ﻿using Vostok.Airlock;
 using Vostok.Graphite.Client;
+using Vostok.Logging;
 using Vostok.Metrics;
 
 namespace Vostok.Graphite.Reporter
@@ -10,11 +11,11 @@ namespace Vostok.Graphite.Reporter
         private readonly string routingKeyPrefix;
         private readonly MetricConverter metricConverter;
 
-        public GraphiteMetricReporter(IGraphiteSink sink, string routingKeyPrefix)
+        public GraphiteMetricReporter(IGraphiteSink sink, string routingKeyPrefix, ILog log)
         {
             this.sink = sink;
             this.routingKeyPrefix = routingKeyPrefix;
-            metricConverter = new MetricConverter(new GraphiteNameBuilder());
+            metricConverter = new MetricConverter(new GraphiteNameBuilder(), log);
         }
         public void SendEvent(MetricEvent metricEvent)
         {
