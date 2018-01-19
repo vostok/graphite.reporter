@@ -50,7 +50,8 @@ namespace Vostok.Graphite.Client
             var isSegmentStart = true;
             for (var i = 0; i < name.Length; i++)
             {
-                if (name[i] == '.')
+                var ch = name[i];
+                if (ch == '.')
                 {
                     if (isSegmentStart)
                     {
@@ -61,16 +62,21 @@ namespace Vostok.Graphite.Client
                 }
 
                 var isValidSegmentChar =
-                    name[i] >= 'a' && name[i] <= 'z'
-                    || name[i] >= 'A' && name[i] <= 'Z'
-                    || name[i] >= '0' && name[i] <= '9'
-                    || name[i] == '_';
+                    IsValidSegmentChar(ch);
                 if (!isValidSegmentChar)
                 {
-                    throw new ArgumentException($"Invalid char '{name[i]}' in metric name. Position {i}: {name}");
+                    throw new ArgumentException($"Invalid char '{ch}' in metric name. Position {i}: {name}");
                 }
                 isSegmentStart = false;
             }
+        }
+
+        public static bool IsValidSegmentChar(char ch)
+        {
+            return ch >= 'a' && ch <= 'z'
+                   || ch >= 'A' && ch <= 'Z'
+                   || ch >= '0' && ch <= '9'
+                   || ch == '-' || ch == '_';
         }
     }
 }
