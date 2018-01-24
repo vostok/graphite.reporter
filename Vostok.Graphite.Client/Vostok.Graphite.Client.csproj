@@ -2,7 +2,6 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <AssemblyName>Vostok.Graphite.Client</AssemblyName>
     <RootNamespace>Vostok.Graphite.Client</RootNamespace>
     <Authors>Vostok team</Authors>
@@ -10,7 +9,10 @@
     <Product>Vostok</Product>
   </PropertyGroup>
 
-    <ItemGroup>
-        <PackageReference Include="Vostok.Core" Version="1.0.0-pre000464" />
-    </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Vostok.Core">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\vostok.core\Vostok.Core\bin\Release\netstandard2.0\Vostok.Core.dll</HintPath>
+    </Reference>
+  </ItemGroup>
 </Project>

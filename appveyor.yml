@@ -1,4 +1,4 @@
-version: '1.0.0-pre{build}'
+version: '0.0.0.{build}'
 image: Visual Studio 2017
 nuget:
   project_feed: true
@@ -21,28 +21,50 @@ install:
         }
       }
       $zeroPaddedBuildNumber = [convert]::ToInt32($env:appveyor_build_number, 10).ToString("000000")
-      Update-AppveyorBuild -Version "1.0.0-pre$zeroPaddedBuildNumber$branchstr".Replace("_", "-")
+      Update-AppveyorBuild -Version "0.0.0.$zeroPaddedBuildNumber$branchstr".Replace("_", "-")
       $csprojs = $env:appveyor_build_folder | Get-ChildItem -Recurse -Filter "*.csproj"
       foreach($csproj in $csprojs)
       {
         $name = $csproj.BaseName
         $xmlPath = "$env:appveyor_build_folder\$name\$name.csproj"
         $xml = [xml](Get-Content $xmlPath)
-        $gen = $xml.SelectSingleNode("//GeneratePackageOnBuild")
-        if ($gen -and $gen.InnerText -eq "True")
+        $props = $xml.SelectSingleNode("//PropertyGroup")
+        if ($props)
         {
           echo "Generating version $env:appveyor_build_version for $name"
           $version = $xml.CreateElement("Version")
           $versionText = $xml.CreateTextNode($env:appveyor_build_version)
           $version.AppendChild($versionText)
-          $gen.ParentNode.AppendChild($version)
+          $props.AppendChild($version)
           $xml.Save($xmlPath)
         }
       }
-  - dotnet restore
+      cd $env:appveyor_build_folder\..
+      git clone https://github.com/vostok/cement.git
+      cd "cement"
+      nuget restore
+      msbuild Cement.Net.sln
+
+      $cm="$env:appveyor_build_folder\..\cement\Cement.Net\bin\Release\cm.exe"
+      cd $env:appveyor_build_folder\..
+      & $cm init
+
+      $wc = New-Object System.Net.WebClient
+      $wc.DownloadFile("https://raw.githubusercontent.com/vostok/cement-modules/master/settings", "$env:USERPROFILE\.cement\settings")
+
+      cd $env:appveyor_build_folder
+      echo update-deps
+      & $cm update-deps
+      echo build-deps
+      & $cm build-deps
+      echo dotnet restore
+      dotnet restore
 configuration: Release
 after_build:
   - ps: |
+      $cm="$env:appveyor_build_folder\..\cement\Cement.Net\bin\Release\cm.exe"
+      $proj="$env:APPVEYOR_PROJECT_NAME.csproj"
+      & $cm pack $proj
       $prbranch = "$env:APPVEYOR_PULL_REQUEST_HEAD_REPO_BRANCH"
       if ($prbranch -eq "")
       {
@@ -58,8 +80,14 @@ after_build:
         }
       }
 test_script:
-  - ps: dotnet test "$env:appveyor_build_folder\Vostok.Graphite.Client.Tests\Vostok.Graphite.Client.Tests.csproj" --logger "trx;LogFileName=core-tests.trx"
+  - ps: |
+      if (Test-Path "$env:appveyor_build_folder\$env:APPVEYOR_PROJECT_NAME.Tests\$env:APPVEYOR_PROJECT_NAME.Tests.csproj")
+      {
+        dotnet test "$env:appveyor_build_folder\$env:APPVEYOR_PROJECT_NAME.Tests\$env:APPVEYOR_PROJECT_NAME.Tests.csproj" --logger "trx;LogFileName=tests.trx"
+      }
 after_test:
   - ps: |
+      if (Test-Path "$env:appveyor_build_folder\$env:APPVEYOR_PROJECT_NAME.Tests\TestResults\tests.trx") {
       $wc = New-Object 'System.Net.WebClient'
-      $wc.UploadFile("https://ci.appveyor.com/api/testresults/mstest/$($env:appveyor_job_id)", "$env:appveyor_build_folder\Vostok.Graphite.Client.Tests\TestResults\core-tests.trx")
+        $wc.UploadFile("https://ci.appveyor.com/api/testresults/mstest/$($env:appveyor_job_id)", "$env:appveyor_build_folder\$env:APPVEYOR_PROJECT_NAME.Tests\TestResults\tests.trx")
+      }

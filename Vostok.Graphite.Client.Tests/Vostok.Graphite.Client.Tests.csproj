@@ -21,4 +21,14 @@
     <ProjectReference Include="..\Vostok.Graphite.Reporter\Vostok.Graphite.Reporter.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Reference Include="Vostok.Core">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\vostok.core\Vostok.Core\bin\Release\netstandard2.0\Vostok.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Vostok.Airlock.Client">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\vostok.airlock.client\Vostok.Airlock.Client\bin\Release\netstandard2.0\Vostok.Airlock.Client.dll</HintPath>
+    </Reference>
+  </ItemGroup>
 </Project>
