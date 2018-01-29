@@ -9,6 +9,8 @@ default:
   install:
     - Vostok.Graphite.Reporter/bin/Release/netstandard2.0/Vostok.Graphite.Reporter.dll
     - Vostok.Graphite.Client/bin/Release/netstandard2.0/Vostok.Graphite.Client.dll
+    - module vostok.airlock.client
+    - module vostok.core
 
   deps:
     - vostok.airlock.client
