@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <AssemblyName>Vstk.Graphite.Client</AssemblyName>
+    <RootNamespace>Vstk.Graphite.Client</RootNamespace>
+    <Authors>Vstk team</Authors>
+    <Company>SKB Kontur</Company>
+    <Product>Vstk</Product>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Reference Include="Vstk.Core">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\vstk.core\Vstk.Core\bin\Release\netstandard2.0\Vstk.Core.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+</Project>

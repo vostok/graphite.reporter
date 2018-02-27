@@ -1,0 +1,34 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <IsPackable>false</IsPackable>
+    <OutputType>Library</OutputType>
+    <ApplicationIcon />
+    <StartupObject />
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="FluentAssertions" Version="4.19.4" />
+    <PackageReference Include="NSubstitute" Version="3.1.0" />
+    <PackageReference Include="NUnit" Version="3.8.1" />
+    <PackageReference Include="NUnit3TestAdapter" Version="3.8.0" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.3.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Vstk.Graphite.Client\Vstk.Graphite.Client.csproj" />
+    <ProjectReference Include="..\Vstk.Graphite.Reporter\Vstk.Graphite.Reporter.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Vstk.Core">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\vstk.core\Vstk.Core\bin\Release\netstandard2.0\Vstk.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Vstk.Airlock.Client">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\vstk.airlock.client\Vstk.Airlock.Client\bin\Release\netstandard2.0\Vstk.Airlock.Client.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+</Project>

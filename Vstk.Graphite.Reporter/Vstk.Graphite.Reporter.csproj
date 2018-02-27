@@ -1,0 +1,28 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <AssemblyName>Vstk.Graphite.Reporter</AssemblyName>
+    <RootNamespace>Vstk.Graphite.Reporter</RootNamespace>
+    <Authors>Vstk team</Authors>
+    <Company>SKB Kontur</Company>
+    <Product>Vstk</Product>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Reference Include="Vstk.Airlock.Client">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\vstk.airlock.client\Vstk.Airlock.Client\bin\Release\netstandard2.0\Vstk.Airlock.Client.dll</HintPath>
+    </Reference>
+
+    <Reference Include="Vstk.Core">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\vstk.core\Vstk.Core\bin\Release\netstandard2.0\Vstk.Core.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Vstk.Graphite.Client\Vstk.Graphite.Client.csproj" />
+  </ItemGroup>
+
+</Project>
