@@ -4,9 +4,13 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <AssemblyName>Vstk.Graphite.Client</AssemblyName>
     <RootNamespace>Vstk.Graphite.Client</RootNamespace>
-    <Authors>Vstk team</Authors>
+    <Authors>Vostok team</Authors>
     <Company>SKB Kontur</Company>
-    <Product>Vstk</Product>
+    <Product>Vostok</Product>
+    <Copyright>Copyright © SKB Kontur 2017-2018</Copyright>
+    <PackageProjectUrl>https://github.com/vostok/vstk.graphite.reporter</PackageProjectUrl>
+    <PackageLicenseUrl>https://github.com/vostok/vstk.graphite.reporter/blob/master/LICENSE</PackageLicenseUrl>
+    <Description>Graphite client to send metrics</Description>
   </PropertyGroup>
 
   <ItemGroup>

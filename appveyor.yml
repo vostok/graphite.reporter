@@ -89,3 +89,18 @@ after_test:
       $wc = New-Object 'System.Net.WebClient'
         $wc.UploadFile("https://ci.appveyor.com/api/testresults/mstest/$($env:appveyor_job_id)", "$env:appveyor_build_folder\$env:APPVEYOR_PROJECT_NAME.Tests\TestResults\tests.trx")
       }
+notifications:
+  - provider: Webhook
+    url: https://webhooks.gitter.im/e/f02e74a3a636a56c590b
+    on_build_success: true
+    on_build_failure: true
+    on_build_status_changed: true
+deploy:
+  provider: NuGet
+  on:
+    appveyor_repo_tag: true
+  api_key:
+    secure: JxB6wnv1G5qa2PG2XjtXYjdhktbBS8dYZVfJ/oXwdlLOYnPz7pngyoe0Tphp+UyT
+  skip_symbols: false
+  symbol_server:           # remove to push symbols to SymbolSource.org
+  artifact: /.*\.nupkg/

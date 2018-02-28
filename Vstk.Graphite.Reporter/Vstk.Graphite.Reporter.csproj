@@ -4,9 +4,9 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <AssemblyName>Vstk.Graphite.Reporter</AssemblyName>
     <RootNamespace>Vstk.Graphite.Reporter</RootNamespace>
-    <Authors>Vstk team</Authors>
+    <Authors>Vostok team</Authors>
     <Company>SKB Kontur</Company>
-    <Product>Vstk</Product>
+    <Product>Vostok</Product>
   </PropertyGroup>
 
   <ItemGroup>
