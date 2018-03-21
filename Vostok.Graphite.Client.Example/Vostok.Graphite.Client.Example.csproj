@@ -3,18 +3,18 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp2.0</TargetFramework>
-    <AssemblyName>Vstk.Graphite.Client.Example</AssemblyName>
-    <RootNamespace>Vstk.Graphite.Client.Example</RootNamespace>
+    <AssemblyName>Vostok.Graphite.Client.Example</AssemblyName>
+    <RootNamespace>Vostok.Graphite.Client.Example</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Vstk.Graphite.Client\Vstk.Graphite.Client.csproj" />
+    <ProjectReference Include="..\Vostok.Graphite.Client\Vostok.Graphite.Client.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <Reference Include="Vstk.Core">
+    <Reference Include="Vostok.Core">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\vstk.core\Vstk.Core\bin\Release\netstandard2.0\Vstk.Core.dll</HintPath>
+      <HintPath>..\..\vostok.core\Vostok.Core\bin\Release\netstandard2.0\Vostok.Core.dll</HintPath>
     </Reference>
   </ItemGroup>
 </Project>

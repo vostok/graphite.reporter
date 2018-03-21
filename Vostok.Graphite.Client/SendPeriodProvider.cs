@@ -1,8 +1,8 @@
 ﻿using System;
-using Vstk.Commons.Utilities;
-using Vstk.Logging;
+using Vostok.Commons.Utilities;
+using Vostok.Logging;
 
-namespace Vstk.Graphite.Client
+namespace Vostok.Graphite.Client
 {
     internal class SendPeriodProvider : ISendPeriodProvider
     {

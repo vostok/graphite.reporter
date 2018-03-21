@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using FluentAssertions;
 using NSubstitute;
 using NUnit.Framework;
-using Vstk.Graphite.Reporter;
-using Vstk.Logging.Logs;
-using Vstk.Metrics;
+using Vostok.Graphite.Reporter;
+using Vostok.Logging.Logs;
+using Vostok.Metrics;
 
-namespace Vstk.Graphite.Client.Tests
+namespace Vostok.Graphite.Client.Tests
 {
     public class MetricConverter_Tests
     {

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Vstk.Graphite.Client
+namespace Vostok.Graphite.Client
 {
     public class Metric
     {

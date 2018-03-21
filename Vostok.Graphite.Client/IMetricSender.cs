@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace Vstk.Graphite.Client
+namespace Vostok.Graphite.Client
 {
     internal interface IMetricSender
     {

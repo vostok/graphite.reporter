@@ -5,7 +5,7 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Vstk.Graphite.Client
+namespace Vostok.Graphite.Client
 {
     internal class GraphiteConnection : IDisposable
     {

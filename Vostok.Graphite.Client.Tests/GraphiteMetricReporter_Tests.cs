@@ -1,19 +1,19 @@
 ﻿using System.Threading;
 using NUnit.Framework;
-using Vstk.Airlock;
-using Vstk.Commons.Extensions.UnitConvertions;
-using Vstk.Graphite.Reporter;
-using Vstk.Logging.Logs;
-using Vstk.Metrics;
+using Vostok.Airlock;
+using Vostok.Commons.Extensions.UnitConvertions;
+using Vostok.Graphite.Reporter;
+using Vostok.Logging.Logs;
+using Vostok.Metrics;
 
-namespace Vstk.Graphite.Client.Tests
+namespace Vostok.Graphite.Client.Tests
 {
     public class GraphiteMetricReporter_Tests
     {
         [Test, Ignore("Manual test")]
         public void Test()
         {
-            var prefix = RoutingKey.CreatePrefix("vstk", "ci", "test");
+            var prefix = RoutingKey.CreatePrefix("vostok", "ci", "test");
             var log = new ConsoleLog();
             var config = new GraphiteSinkConfig()
             {

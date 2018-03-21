@@ -2,10 +2,10 @@
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Vstk.Commons.Synchronization;
-using Vstk.Commons.Utilities;
+using Vostok.Commons.Synchronization;
+using Vostok.Commons.Utilities;
 
-namespace Vstk.Graphite.Client
+namespace Vostok.Graphite.Client
 {
     internal class MetricSendDaemon : IMetricSendDaemon
     {

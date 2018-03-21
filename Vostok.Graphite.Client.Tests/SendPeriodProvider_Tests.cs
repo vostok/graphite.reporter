@@ -1,8 +1,8 @@
 ﻿using FluentAssertions;
 using NUnit.Framework;
-using Vstk.Logging.Logs;
+using Vostok.Logging.Logs;
 
-namespace Vstk.Graphite.Client.Tests
+namespace Vostok.Graphite.Client.Tests
 {
     [TestFixture]
     public class SendPeriodProvider_Tests

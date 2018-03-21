@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Vstk.Graphite.Client
+namespace Vostok.Graphite.Client
 {
     public interface IGraphiteSink
     {

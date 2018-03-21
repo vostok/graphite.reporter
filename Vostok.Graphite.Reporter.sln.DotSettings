@@ -3,7 +3,7 @@
 	
 	
 	<s:Boolean x:Key="/Default/Environment/InjectedLayers/FileInjectedLayer/=B85E856E831A564FAC221E0A52019847/@KeyIndexDefined">True</s:Boolean>
-	<s:String x:Key="/Default/Environment/InjectedLayers/FileInjectedLayer/=B85E856E831A564FAC221E0A52019847/AbsolutePath/@EntryValue">C:\Sources\Vstk\core\CSharpCodeStyle.DotSettings</s:String>
+	<s:String x:Key="/Default/Environment/InjectedLayers/FileInjectedLayer/=B85E856E831A564FAC221E0A52019847/AbsolutePath/@EntryValue">C:\Sources\Vostok\core\CSharpCodeStyle.DotSettings</s:String>
 	<s:String x:Key="/Default/Environment/InjectedLayers/FileInjectedLayer/=B85E856E831A564FAC221E0A52019847/RelativePath/@EntryValue">..\..\core\CSharpCodeStyle.DotSettings</s:String>
 	
 	

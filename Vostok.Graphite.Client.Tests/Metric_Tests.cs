@@ -1,14 +1,14 @@
 ﻿using System;
 using NUnit.Framework;
 
-namespace Vstk.Graphite.Client.Tests
+namespace Vostok.Graphite.Client.Tests
 {
     [TestFixture]
     public class Metric_Tests
     {
-        [TestCase("Vstk.TestApp.rps")]
-        [TestCase("Vstk")]
-        [TestCase("Vstk.123.testapp")]
+        [TestCase("Vostok.TestApp.rps")]
+        [TestCase("Vostok")]
+        [TestCase("Vostok.123.testapp")]
         [TestCase("ABC")]
         [TestCase("a_b")]
         public void Can_create_metric_with_valid_name(string name)

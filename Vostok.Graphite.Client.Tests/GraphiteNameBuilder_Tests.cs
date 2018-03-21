@@ -1,9 +1,9 @@
 ﻿using System.Linq;
 using FluentAssertions;
 using NUnit.Framework;
-using Vstk.Graphite.Reporter;
+using Vostok.Graphite.Reporter;
 
-namespace Vstk.Graphite.Client.Tests
+namespace Vostok.Graphite.Client.Tests
 {
     public class GraphiteNameBuilder_Tests
     {

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Vstk.Graphite.Reporter
+namespace Vostok.Graphite.Reporter
 {
     public class TagInfo
     {

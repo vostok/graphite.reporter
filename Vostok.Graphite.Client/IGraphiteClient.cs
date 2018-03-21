@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Vstk.Graphite.Client
+namespace Vostok.Graphite.Client
 {
     public interface IGraphiteClient
     {

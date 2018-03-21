@@ -17,18 +17,18 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Vstk.Graphite.Client\Vstk.Graphite.Client.csproj" />
-    <ProjectReference Include="..\Vstk.Graphite.Reporter\Vstk.Graphite.Reporter.csproj" />
+    <ProjectReference Include="..\Vostok.Graphite.Client\Vostok.Graphite.Client.csproj" />
+    <ProjectReference Include="..\Vostok.Graphite.Reporter\Vostok.Graphite.Reporter.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <Reference Include="Vstk.Core">
+    <Reference Include="Vostok.Core">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\vstk.core\Vstk.Core\bin\Release\netstandard2.0\Vstk.Core.dll</HintPath>
+      <HintPath>..\..\vostok.core\Vostok.Core\bin\Release\netstandard2.0\Vostok.Core.dll</HintPath>
     </Reference>
-    <Reference Include="Vstk.Airlock.Client">
+    <Reference Include="Vostok.Airlock.Client">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\vstk.airlock.client\Vstk.Airlock.Client\bin\Release\netstandard2.0\Vstk.Airlock.Client.dll</HintPath>
+      <HintPath>..\..\vostok.airlock.client\Vostok.Airlock.Client\bin\Release\netstandard2.0\Vostok.Airlock.Client.dll</HintPath>
     </Reference>
   </ItemGroup>
 </Project>

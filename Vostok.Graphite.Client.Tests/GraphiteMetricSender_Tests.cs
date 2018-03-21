@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 using FluentAssertions;
 using NUnit.Framework;
-using Vstk.Logging.Logs;
+using Vostok.Logging.Logs;
 using NSubstitute;
 
-namespace Vstk.Graphite.Client.Tests
+namespace Vostok.Graphite.Client.Tests
 {
     [TestFixture]
     public class GraphiteMetricSender_Tests

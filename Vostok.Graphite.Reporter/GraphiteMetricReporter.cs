@@ -1,9 +1,9 @@
-﻿using Vstk.Airlock;
-using Vstk.Graphite.Client;
-using Vstk.Logging;
-using Vstk.Metrics;
+﻿using Vostok.Airlock;
+using Vostok.Graphite.Client;
+using Vostok.Logging;
+using Vostok.Metrics;
 
-namespace Vstk.Graphite.Reporter
+namespace Vostok.Graphite.Reporter
 {
     public class GraphiteMetricReporter : IMetricEventReporter
     {

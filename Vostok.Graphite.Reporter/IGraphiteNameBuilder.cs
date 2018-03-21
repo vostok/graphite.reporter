@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Vstk.Graphite.Reporter
+namespace Vostok.Graphite.Reporter
 {
     public interface IGraphiteNameBuilder
     {

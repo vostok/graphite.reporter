@@ -63,7 +63,7 @@ after_build:
       $proj="$env:APPVEYOR_PROJECT_NAME.csproj"
       & $env:cm pack $proj
   - ps: |
-      $proj="Vstk.Graphite.Client.csproj"
+      $proj="Vostok.Graphite.Client.csproj"
       & $env:cm pack $proj
   - ps: |
       $prbranch = "$env:APPVEYOR_PULL_REQUEST_HEAD_REPO_BRANCH"

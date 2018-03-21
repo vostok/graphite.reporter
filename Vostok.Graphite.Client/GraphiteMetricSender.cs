@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading.Tasks;
-using Vstk.Logging;
+using Vostok.Logging;
 
-namespace Vstk.Graphite.Client
+namespace Vostok.Graphite.Client
 {
     internal class GraphiteMetricSender : IMetricSender
     {

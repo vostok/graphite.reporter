@@ -1,7 +1,7 @@
 ﻿using System.Globalization;
 using System.Text;
 
-namespace Vstk.Graphite.Client
+namespace Vostok.Graphite.Client
 {
     internal class MetricSerializer
     {

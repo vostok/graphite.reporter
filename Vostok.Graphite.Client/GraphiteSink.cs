@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using Vstk.Logging;
-using Vstk.Logging.Logs;
+using Vostok.Logging;
+using Vostok.Logging.Logs;
 
-namespace Vstk.Graphite.Client
+namespace Vostok.Graphite.Client
 {
     public class GraphiteSink : IGraphiteSink, IDisposable
     {

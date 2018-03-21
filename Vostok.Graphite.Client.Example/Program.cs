@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
-using Vstk.Logging.Logs;
+using Vostok.Logging.Logs;
 
-namespace Vstk.Graphite.Client.Example
+namespace Vostok.Graphite.Client.Example
 {
     public static class Program
     {
@@ -48,7 +48,7 @@ namespace Vstk.Graphite.Client.Example
                 var timestamp = startTimestamp - periodPerSeconds*metricsCount*j;
 
                 var metrics = Enumerable.Range(0, metricsCount)
-                    .Select(i => new Metric("Vstk.GraphiteClient_Example.Thread" + threadNumber, random.Next(10), (long) (timestamp + i*5)))
+                    .Select(i => new Metric("Vostok.GraphiteClient_Example.Thread" + threadNumber, random.Next(10), (long) (timestamp + i*5)))
                     .ToList();
                 graphiteClient.SendAsync(metrics).Wait();
             }

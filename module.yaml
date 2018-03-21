@@ -1,20 +1,20 @@
 default:
 
   build:
-    target: Vstk.Graphite.Reporter.sln
+    target: Vostok.Graphite.Reporter.sln
     configuration: Release
     tool:
       name: dotnet
 
   install:
-    - Vstk.Graphite.Reporter/bin/Release/netstandard2.0/Vstk.Graphite.Reporter.dll
-    - Vstk.Graphite.Client/bin/Release/netstandard2.0/Vstk.Graphite.Client.dll
-    - module vstk.airlock.client
-    - module vstk.core
+    - Vostok.Graphite.Reporter/bin/Release/netstandard2.0/Vostok.Graphite.Reporter.dll
+    - Vostok.Graphite.Client/bin/Release/netstandard2.0/Vostok.Graphite.Client.dll
+    - module vostok.airlock.client
+    - module vostok.core
 
   deps:
-    - vstk.airlock.client
-    - vstk.core
+    - vostok.airlock.client
+    - vostok.core
 
 notests *default:
   build:

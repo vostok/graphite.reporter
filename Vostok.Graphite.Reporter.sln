@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27130.2010
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Vstk.Graphite.Client", "Vstk.Graphite.Client\Vstk.Graphite.Client.csproj", "{90F23678-A5D8-482B-BC9F-8A1F613D1146}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Vostok.Graphite.Client", "Vostok.Graphite.Client\Vostok.Graphite.Client.csproj", "{90F23678-A5D8-482B-BC9F-8A1F613D1146}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Vstk.Graphite.Client.Example", "Vstk.Graphite.Client.Example\Vstk.Graphite.Client.Example.csproj", "{14C4DA67-D1A7-4209-AED6-50FFA0D07976}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Vostok.Graphite.Client.Example", "Vostok.Graphite.Client.Example\Vostok.Graphite.Client.Example.csproj", "{14C4DA67-D1A7-4209-AED6-50FFA0D07976}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Vstk.Graphite.Client.Tests", "Vstk.Graphite.Client.Tests\Vstk.Graphite.Client.Tests.csproj", "{FB1FD7EC-57DF-4D00-88E7-8F9B5D5A73C0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Vostok.Graphite.Client.Tests", "Vostok.Graphite.Client.Tests\Vostok.Graphite.Client.Tests.csproj", "{FB1FD7EC-57DF-4D00-88E7-8F9B5D5A73C0}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Vstk.Graphite.Reporter", "Vstk.Graphite.Reporter\Vstk.Graphite.Reporter.csproj", "{DDAB205B-9D13-48DD-9948-3760A9B23FF8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Vostok.Graphite.Reporter", "Vostok.Graphite.Reporter\Vostok.Graphite.Reporter.csproj", "{DDAB205B-9D13-48DD-9948-3760A9B23FF8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

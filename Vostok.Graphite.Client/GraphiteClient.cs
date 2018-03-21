@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Vstk.Commons.Collections;
-using Vstk.Logging;
+using Vostok.Commons.Collections;
+using Vostok.Logging;
 
-namespace Vstk.Graphite.Client
+namespace Vostok.Graphite.Client
 {
     public class GraphiteClient : IGraphiteClient, IDisposable
     {

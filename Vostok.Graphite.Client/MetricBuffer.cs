@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Vstk.Graphite.Client
+namespace Vostok.Graphite.Client
 {
     internal class MetricBuffer : IMetricBuffer
     {

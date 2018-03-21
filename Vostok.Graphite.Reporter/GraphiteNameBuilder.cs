@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Vstk.Airlock;
-using Vstk.Graphite.Client;
-using Vstk.Metrics;
+using Vostok.Airlock;
+using Vostok.Graphite.Client;
+using Vostok.Metrics;
 
-namespace Vstk.Graphite.Reporter
+namespace Vostok.Graphite.Reporter
 {
     public class GraphiteNameBuilder : IGraphiteNameBuilder
     {

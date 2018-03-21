@@ -1,7 +1,7 @@
 ﻿using System;
-using Vstk.Commons.Extensions.UnitConvertions;
+using Vostok.Commons.Extensions.UnitConvertions;
 
-namespace Vstk.Graphite.Client
+namespace Vostok.Graphite.Client
 {
     public class GraphiteSinkConfig
     {
